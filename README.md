@@ -21,8 +21,6 @@ The user can now retrieve the latest version of the file by accessing the docume
 
 ### Todo
 
-- [ ] Upload file input
-- [ ] Login page
 - [ ] Authorize pages
 - [ ] List of uploaded files
 - [ ] Upload files with the same URL
@@ -30,8 +28,7 @@ The user can now retrieve the latest version of the file by accessing the docume
 
 ### In Progress
 
-- [ ] -
-
 ### Done ✓
 
-- [x] -
+- [x] Upload file input
+- [x] Login page
