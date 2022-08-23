@@ -7,7 +7,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   async function handleButton() {
-    const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+    const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
     setLoading(true);
     await delay(1000);
     setLoading(false);
