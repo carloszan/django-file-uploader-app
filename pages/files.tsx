@@ -30,7 +30,6 @@ export default function Files() {
     <div>
       <Head>
         <title>File Uploader</title>
-        <meta name="description" content="Technical Assessment by Propylon" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
