@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { NavBar } from "../components/navbar";
 
 export default function Login() {
   return (
@@ -6,6 +7,9 @@ export default function Login() {
       <Head>
         <title>Login</title>
       </Head>
+
+      <NavBar />
+
       <div className="container bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col mx-auto">
         <div className="mb-4">
           <label
