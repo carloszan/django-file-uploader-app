@@ -7,7 +7,7 @@ export type LoginDto = {
   token: string;
 };
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<LoginDto>
 ) {
@@ -17,6 +17,9 @@ export default function handler(
   }
 
   const { email, password } = JSON.parse(req.body);
+
+  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+  await delay(2000);
 
   const user: LoginDto = {
     email: email,
