@@ -28,6 +28,8 @@ The user can now retrieve the latest version of the file by accessing the docume
 
 ### In Progress
 
+- [ ] Log user in
+
 ### Done ✓
 
 - [x] Upload file input

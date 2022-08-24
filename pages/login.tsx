@@ -1,15 +1,22 @@
 import Head from "next/head";
 import { useState } from "react";
+import useSWR from "swr";
 import { NavBar } from "../components/navbar";
 import { Spinner } from "../components/spinner";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   async function handleButton() {
-    const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
     setLoading(true);
-    await delay(1000);
+
+    const data = await fetch("/api/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    }).then((response) => response.json());
+
     setLoading(false);
   }
 
@@ -27,13 +34,14 @@ export default function Login() {
             className="block text-grey-darker text-sm font-bold mb-2"
             htmlFor="username"
           >
-            Username
+            Email
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-            id="username"
+            id="email"
             type="text"
-            placeholder="Username"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-6">
@@ -48,6 +56,7 @@ export default function Login() {
             id="password"
             type="password"
             placeholder="********"
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="flex items-center justify-between">
