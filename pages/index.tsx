@@ -13,6 +13,10 @@ const Home: NextPage = () => {
 
   const { user } = useUser({ redirectTo: "/login" });
 
+  if (!user || user.isLoggedIn === false) {
+    return <div>Loading...</div>;
+  }
+
   async function handleClick() {
     setLoading(true);
     await delay(1000);
