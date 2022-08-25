@@ -1,16 +1,15 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { User } from "pages/api/user";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { withIronSessionApiRoute } from "iron-session/next";
+import { sessionOptions } from "libs/session";
 
-export type LoginDto = {
+interface LoginDto {
   email: string;
   username: string;
   token: string;
-};
+}
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<LoginDto>
-) {
+async function handler(req: NextApiRequest, res: NextApiResponse<LoginDto>) {
   if (req.method !== "POST") {
     res.status(405);
     return;
@@ -21,10 +20,23 @@ export default async function handler(
   const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
   await delay(2000);
 
-  const user: LoginDto = {
+  const loginDto: LoginDto = {
     email: email,
-    username: password,
+    username: "admin",
     token: "abcdef",
   };
-  res.status(200).json(user);
+
+  const user: User = {
+    isLoggedIn: true,
+    token: loginDto.token,
+    username: loginDto.username,
+  };
+
+  req.session.user = user;
+
+  await req.session.save();
+
+  res.status(200).json(loginDto);
 }
+
+export default withIronSessionApiRoute(handler, sessionOptions);

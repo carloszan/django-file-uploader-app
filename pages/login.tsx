@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
-import useSWR from "swr";
+import useUser from "libs/useUser";
 import { NavBar } from "../components/navbar";
 import { Spinner } from "../components/spinner";
 
@@ -8,6 +8,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { mutateUser } = useUser({ redirectTo: "/", redirectIfFound: true });
 
   async function handleButton() {
     setLoading(true);
@@ -15,9 +16,11 @@ export default function Login() {
     const data = await fetch("/api/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
-    }).then((response) => response.json());
+    })
+      .then((response) => response.json())
+      .finally(() => setLoading(false));
 
-    setLoading(false);
+    mutateUser(data);
   }
 
   return (

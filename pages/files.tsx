@@ -1,11 +1,12 @@
+import useUser from "libs/useUser";
 import Head from "next/head";
 import useSWR from "swr";
 import { NavBar } from "../components/navbar";
 import { FileDto } from "./api/files";
 
 export default function Files() {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR<FileDto[]>("/api/files", fetcher);
+  const { data, error } = useSWR<FileDto[]>("/api/files");
+  const { user } = useUser({ redirectTo: "/login" });
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;

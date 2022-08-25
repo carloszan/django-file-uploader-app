@@ -1,14 +1,17 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import { NavBar } from "../components/navbar";
-import { Spinner } from "../components/spinner";
+import useUser from "libs/useUser";
+import { NavBar } from "components/navbar";
+import { Spinner } from "components/spinner";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 const Home: NextPage = () => {
   const [file, setFile] = useState<File | undefined>(undefined);
   const [loading, setLoading] = useState(false);
+
+  const { user } = useUser({ redirectTo: "/login" });
 
   async function handleClick() {
     setLoading(true);
