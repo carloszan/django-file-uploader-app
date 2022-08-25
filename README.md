@@ -21,16 +21,16 @@ The user can now retrieve the latest version of the file by accessing the docume
 
 ### Todo
 
-- [ ] Authorize pages
-- [ ] List of uploaded files
 - [ ] Upload files with the same URL
 - [ ] Allow users to fetch any revision of any file
 
 ### In Progress
 
-- [ ] Log user in
+- [ ] List of uploaded files
 
 ### Done ✓
 
+- [x] Authorize pages
+- [x] Log user in
 - [x] Upload file input
 - [x] Login page
