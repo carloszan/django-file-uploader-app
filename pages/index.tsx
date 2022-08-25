@@ -3,12 +3,21 @@ import Head from "next/head";
 import { useState } from "react";
 import { NavBar } from "../components/navbar";
 import { Spinner } from "../components/spinner";
+import { AuthProvider, useAuth } from "../contexts/AuthContext";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-const Home: NextPage = () => {
+export async function getServerSideProps(context) {
+  return {
+    props: { hello: "world" },
+  };
+}
+
+const Home: NextPage = ({ hello }) => {
   const [file, setFile] = useState<File | undefined>(undefined);
   const [loading, setLoading] = useState(false);
+
+  console.log(hello);
 
   async function handleClick() {
     setLoading(true);
@@ -17,36 +26,38 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div>
-      <Head>
-        <title>File Uploader</title>
-        <meta name="description" content="Technical Assessment by Propylon" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <AuthProvider>
+      <div>
+        <Head>
+          <title>File Uploader</title>
+          <meta name="description" content="Technical Assessment by Propylon" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <NavBar />
+        <NavBar />
 
-      <div className="container mx-auto">
-        <Dropdown file={file} onChange={setFile} />
+        <div className="container mx-auto">
+          <Dropdown file={file} onChange={setFile} />
 
-        {loading ? (
-          <Spinner />
-        ) : (
-          <>
-            {file ? (
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={handleClick}
-              >
-                Upload
-              </button>
-            ) : (
-              <></>
-            )}
-          </>
-        )}
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              {file ? (
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={handleClick}
+                >
+                  Upload
+                </button>
+              ) : (
+                <></>
+              )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </AuthProvider>
   );
 };
 

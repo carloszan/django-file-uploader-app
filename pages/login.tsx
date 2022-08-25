@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { useState } from "react";
-import useSWR from "swr";
 import { NavBar } from "../components/navbar";
 import { Spinner } from "../components/spinner";
 
