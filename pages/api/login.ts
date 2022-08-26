@@ -2,13 +2,7 @@ import { User } from "pages/api/user";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "libs/session";
-import fetchJson from "libs/fetchJson";
-
-interface LoginDto {
-  email: string;
-  username: string;
-  token: string;
-}
+import { LoginDto, login } from "libs/api";
 
 async function handler(
   req: NextApiRequest,
@@ -28,13 +22,7 @@ async function handler(
       email: emailResponse,
       token: tokenResponse,
       username: usernameResponse,
-    } = await fetchJson<LoginDto>(process.env.API_URL! + "/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    } = await login({ email, password });
 
     const loginDto: LoginDto = {
       email: emailResponse,
