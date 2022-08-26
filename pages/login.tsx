@@ -8,19 +8,25 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const { mutateUser } = useUser({ redirectTo: "/", redirectIfFound: true });
 
   async function handleButton() {
     setLoading(true);
+    setErrorMessage("");
 
     const data = await fetch("/api/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
-    })
-      .then((response) => response.json())
-      .finally(() => setLoading(false));
+    }).finally(() => setLoading(false));
 
-    mutateUser(data);
+    if (data.status == 500) {
+      setErrorMessage("Log in error. Try again");
+      return;
+    }
+
+    const user = await data.json();
+    mutateUser(user);
   }
 
   return (
@@ -74,6 +80,11 @@ export default function Login() {
               Sign in
             </button>
           )}
+        </div>
+        <div className="flex items-center justify-between">
+          <h1 className="font-medium leading-tight text-3xl mt-0 mb-2 text-red-600">
+            {errorMessage}
+          </h1>
         </div>
       </div>
     </>
