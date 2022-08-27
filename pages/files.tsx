@@ -1,8 +1,9 @@
+import Link from "next/link";
 import useUser from "libs/useUser";
 import Head from "next/head";
 import useSWR from "swr";
-import { NavBar } from "../components/navbar";
-import { FileDto } from "./api/files";
+import { FileDto } from "libs/api";
+import { NavBar } from "components/navbar";
 
 export default function Files() {
   const { data, error } = useSWR<FileDto[]>("/api/files");
@@ -11,16 +12,14 @@ export default function Files() {
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
-  const fileList = data.map(({ id, name, type, url }) => {
+  const fileList = data.map(({ id, name, type, file_url }) => {
     return (
       <li key={id}>
         <div className="columns-3 space-y-4">
           <div>{name}</div>
           <div>{type}</div>
-          <div>
-            <a href={url} className="text-blue-500">
-              Url
-            </a>
+          <div className="text-blue-500">
+            <Link href={file_url ?? ""}>Url</Link>
           </div>
         </div>
       </li>
