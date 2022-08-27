@@ -2,24 +2,18 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { sessionOptions } from "libs/session";
+import { FileDto, files } from "libs/api";
 
-export type FileDto = {
-  id: string;
-  name: string;
-  type: string;
-  url: string;
-};
-
-function handler(req: NextApiRequest, res: NextApiResponse<FileDto[] | null>) {
+async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<FileDto[] | null>
+) {
   if (!req.session.user) {
     return res.status(403).send(null);
   }
 
-  const files: FileDto[] = [
-    { id: "1", name: "image1.png", type: "png", url: "abc" },
-    { id: "2", name: "image2.jpg", type: "jpg", url: "def" },
-  ];
-  res.status(200).json(files);
+  const response: FileDto[] = await files({ token: req.session.user.token });
+  res.status(200).json(response);
 }
 
 export default withIronSessionApiRoute(handler, sessionOptions);

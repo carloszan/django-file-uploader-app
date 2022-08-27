@@ -26,10 +26,11 @@ The user can now retrieve the latest version of the file by accessing the docume
 
 ### In Progress
 
-- [ ] List of uploaded files
+- [ ] Upload files
 
 ### Done ✓
 
+- [x] List of uploaded files
 - [x] Authorize pages
 - [x] Log user in
 - [x] Upload file input

@@ -6,6 +6,13 @@ export interface LoginDto {
   token: string;
 }
 
+export type FileDto = {
+  id: string;
+  name: string;
+  type: string;
+  file_url: string;
+};
+
 export async function login({
   email,
   password,
@@ -13,20 +20,20 @@ export async function login({
   email: string;
   password: string;
 }) {
-  console.log(process.env.NODE_ENV);
-  if (process.env.NODE_ENV === "production") {
-    return await fetchJson<LoginDto>(process.env.API_URL! + "/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  }
+  return await fetchJson<LoginDto>(process.env.API_URL! + "/api/auth/login", {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
 
-  return {
-    email,
-    username: "admin",
-    token: "abc",
-  };
+export async function files({ token }: { token: string }): Promise<FileDto[]> {
+  return await fetchJson<FileDto[]>(process.env.API_URL! + "/api/files", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }
