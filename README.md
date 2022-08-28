@@ -1,5 +1,36 @@
 File uploader powered by NextJs
 
+###
+
+This project is running on cloud. [Click here to check it out.](https://propylon.czar.dev)
+
+The login auth is:
+
+```
+email: admin@admin.com
+password: 123456
+```
+
+### How to run locally
+
+First, install the dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+Run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
 ### Functional
 
 - Stores files of any type and name
@@ -26,10 +57,9 @@ The user can now retrieve the latest version of the file by accessing the docume
 
 ### In Progress
 
-- [ ] Upload files
-
 ### Done ✓
 
+- [+] Upload files
 - [x] List of uploaded files
 - [x] Authorize pages
 - [x] Log user in
