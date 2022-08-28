@@ -9,6 +9,7 @@ const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 const Home: NextPage = () => {
   const [file, setFile] = useState<File | undefined>(undefined);
+  const [name, setName] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
   const { user } = useUser({ redirectTo: "/login" });
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
 
   async function handleClick() {
     setLoading(true);
-    await delay(1000);
+    console.log(name, file);
     setLoading(false);
   }
 
@@ -34,18 +35,34 @@ const Home: NextPage = () => {
       <NavBar />
 
       <div className="container mx-auto">
+        <div>
+          <label
+            htmlFor="file_name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            File name
+          </label>
+
+          <input
+            type="text"
+            id="file_name"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2"
+            required
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
         <Dropdown file={file} onChange={setFile} />
 
         {loading ? (
           <Spinner />
         ) : (
           <>
-            {file ? (
+            {file && name ? (
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 onClick={handleClick}
               >
-                Upload
+                Upload {name}
               </button>
             ) : (
               <></>
