@@ -1,6 +1,6 @@
 File uploader powered by NextJs
 
-###
+### Cloud
 
 This project is running on cloud. [Click here to check it out.](https://propylon.czar.dev)
 
@@ -29,7 +29,7 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This project is running on cloud. [Click here to check it out. (https://propylon.czar.dev)](https://propylon.czar.dev)
 
 ### Functional
 
