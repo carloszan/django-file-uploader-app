@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import axios from "axios";
 import useUser from "libs/useUser";
 import { NavBar } from "components/navbar";
 import { Spinner } from "components/spinner";
@@ -11,6 +12,7 @@ const Home: NextPage = () => {
   const [file, setFile] = useState<File | undefined>(undefined);
   const [name, setName] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const [url, setUrl] = useState("");
 
   const { user } = useUser({ redirectTo: "/login" });
 
@@ -20,7 +22,16 @@ const Home: NextPage = () => {
 
   async function handleClick() {
     setLoading(true);
-    console.log(name, file);
+
+    const request = { name, file };
+    const { data } = await axios.post("https://api.images.czar.dev", request, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    const id = data.id;
+    setUrl(`https://catalogv2.blob.core.windows.net/storage-images/${id}`);
     setLoading(false);
   }
 
@@ -68,6 +79,17 @@ const Home: NextPage = () => {
               <></>
             )}
           </>
+        )}
+
+        {url ? (
+          <a
+            href={url}
+            className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+          >
+            Click here to see the file
+          </a>
+        ) : (
+          <></>
         )}
       </div>
     </div>

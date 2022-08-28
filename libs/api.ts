@@ -1,4 +1,7 @@
+import { NextApiRequest } from "next";
+import axios from "axios";
 import fetchJson from "./fetchJson";
+import { PostFileDto } from "pages/api/files";
 
 export interface LoginDto {
   email: string;
@@ -33,6 +36,16 @@ export async function files({ token }: { token: string }): Promise<FileDto[]> {
   return await fetchJson<FileDto[]>(process.env.API_URL! + "/api/files", {
     method: "GET",
     headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function saveFile(req: NextApiRequest, token: string) {
+  return await axios.post(process.env.API_URL! + "/api/files/", req, {
+    responseType: "stream",
+    headers: {
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     },
   });
